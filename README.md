@@ -20,7 +20,7 @@ Add the dependency
 	        compile 'com.github.fuxuanyang11:ImageLoader:-SNAPSHOT'
 	}
 ```
-### Step 3 (具体使用看shili)
+### Step 3 (具体使用看示例)
 ```java
 ImageLoaderManager.getInstance().defaultImage(imageView, url);
 ```
