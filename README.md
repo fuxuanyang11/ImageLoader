@@ -17,7 +17,7 @@ Add it in your root build.gradle at the end of repositories:
 Add the dependency
 ```groovy
 	dependencies {
-	        compile 'com.github.fuxuanyang11:ImageLoader:-SNAPSHOT'
+	       compile 'com.github.fuxuanyang11:ImageLoader:1.0.0'
 	}
 ```
 ### Step 3 (具体使用看示例)
