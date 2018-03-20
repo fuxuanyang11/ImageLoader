@@ -35,7 +35,6 @@ public class GlideActivity extends AppCompatActivity {
                 .reSize(new ImageLoaderOptions.ImageReSize(500, 500))//重新设定容器宽高
                 .build();
 
-
         loadNet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

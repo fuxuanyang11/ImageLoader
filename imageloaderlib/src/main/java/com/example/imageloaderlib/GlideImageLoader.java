@@ -1,10 +1,13 @@
 package com.example.imageloaderlib;
 
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 
 
 public class GlideImageLoader implements ImageLoader {
@@ -14,9 +17,13 @@ public class GlideImageLoader implements ImageLoader {
         if (v instanceof ImageView) {
             ImageView imageView = (ImageView) v;
             //加载基本参数
-            DrawableTypeRequest typeRequest = Glide.with(imageView.getContext()).load(url);
-            //装载附加参数
-            loadOptions(typeRequest, options).into(imageView);
+//            DrawableTypeRequest typeRequest = Glide.with(imageView.getContext()).load(url);
+            RequestOptions requestOptions = new RequestOptions();
+            Glide.with(imageView.getContext()).load(url)
+                    .apply(loadOptions(requestOptions, options))
+                    .into(imageView);
+
+
         }
     }
 
@@ -25,9 +32,10 @@ public class GlideImageLoader implements ImageLoader {
         if (v instanceof ImageView) {
             ImageView imageView = (ImageView) v;
             //加载基本参数
-            DrawableTypeRequest typeRequest = Glide.with(imageView.getContext()).load(drawable);
-            //装载附加参数
-            loadOptions(typeRequest, options).into(imageView);
+            RequestOptions requestOptions = new RequestOptions();
+            Glide.with(imageView.getContext()).load(drawable)
+                    .apply(loadOptions(requestOptions, options))
+                    .into(imageView);
         }
     }
 
@@ -37,35 +45,37 @@ public class GlideImageLoader implements ImageLoader {
             ImageView imageView = (ImageView) v;
             Glide.with(imageView.getContext())
                     .load(url)
-                    .placeholder(R.drawable.ic_default_image)
-                    .error(R.drawable.ic_default_image)
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.ic_default_image)
+                            .error(R.drawable.ic_default_image))
                     .into(imageView);
         }
     }
 
 
-    //这个方法用来装载由外部设置的参数
-    private DrawableTypeRequest loadOptions(DrawableTypeRequest dtr,ImageLoaderOptions options){
+    private RequestOptions loadOptions(RequestOptions requestOptions, ImageLoaderOptions options){
 
         if (options==null) {
-            return dtr;
+            return requestOptions;
         }
         if (options.getPlaceHolder()!=-1) {
-            dtr.placeholder(options.getPlaceHolder());
+            requestOptions.placeholder(options.getPlaceHolder());
+
         }
         if (options.getErrorDrawable()!=-1){
-            dtr.error(options.getErrorDrawable());
+            requestOptions.error(options.getErrorDrawable());
         }
         if (options.isCrossFade()) {
-            dtr.crossFade();
+//            requestOptions.crossFade();
         }
         if (options.isSkipMemoryCache()){
-            dtr.skipMemoryCache(options.isSkipMemoryCache());
+            requestOptions.skipMemoryCache(options.isSkipMemoryCache());
         }
         if (options.getSize()!=null) {
-            dtr.override(options.getSize().reWidth,options.getSize().reHeight);
+            requestOptions.override(options.getSize().reWidth,options.getSize().reHeight);
         }
-        return dtr;
+        return requestOptions;
     }
+
 
 }
